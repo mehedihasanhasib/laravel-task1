@@ -3,8 +3,7 @@
         class="bg-white mx-auto my-10 flex max-w-xs flex-col items-center rounded-xl border px-4 py-4 text-center md:max-w-lg md:flex-row md:items-start md:text-left">
         <div class="mb-4 md:mr-6 md:mb-0">
             <img class="h-56 rounded-lg object-cover md:w-56"
-                src="{{ asset('product_images/' . $product->details->image) }}" alt="" width="300"
-                height="250" />
+                src="{{ asset('product_images/' . $product->details->image) }}" alt="" />
         </div>
         <p class="text-xl font-medium text-gray-700">{{ $product->title }}</p>
         <p class="mb-4 text-sm font-medium text-gray-500">Price: {{ $product->details->price }}</p>

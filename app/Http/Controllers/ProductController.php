@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use App\ImageResizer\ImageResizer;
 use App\ImageResizer\ImageResizer\ImageResize;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProductController extends Controller
 {
@@ -42,36 +43,49 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $product = $request->validate([
-        //     'title' => "required|max:255",
-        //     'brand' => "required|max:255",
-        //     'color' => "required|max:255",
-        //     'size' => "required|max:255",
-        //     'price' => "required",
-        //     'image' => "required|mimes:jpeg,png,jpg|max:2048"
-        // ]);
-
+        $product = $request->validate([
+            'title' => "required|max:255",
+            'brand' => "required|max:255",
+            'color' => "required|max:255",
+            'size' => "required|max:255",
+            'price' => "required",
+            'image' => "required|mimes:jpeg,png,jpg|max:2048"
+        ]);
 
         if ($request->hasFile('image')) {
+
             $image = $request->file('image');
+            list($original_width, $original_height) = getimagesize($image);
+            $width = ceil($original_width * 1.5);
+            $height = ceil($original_height * 1.5);
 
-            $file_name = time() . $image->getClientOriginalName();
-            $path =  public_path() . '/product_images';
-            $image->move($path,  $file_name);
 
-            // Product::create($request->only(['title']));
-            // $product_id = Product::get()->last()->id;
-            // Detail::create([
-            //     'color' => $request->color,
-            //     'brand' => $request->brand,
-            //     'size' => $request->size,
-            //     'image' => $file_name,
-            //     'price' => $request->price,
-            //     'product_id' => $product_id,
-            // ]);
+            if ($image->getClientOriginalExtension() == "PNG" || $image->getClientOriginalExtension() == "png") {
+                $original_image = imagecreatefrompng($image);
+                $resized_image = imagecreatetruecolor($width, $height);
+                imagealphablending($resized_image, true);
+                imagesavealpha($resized_image, true);
+                imagecopyresampled($resized_image, $original_image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
+
+                $file_name = time() . $image->getClientOriginalName();
+                $path =  public_path() . '/product_images';
+                imagepng($resized_image, $path . '/' . $file_name);
+            } else {
+                $original_image = imagecreatefromjpeg($image);
+                $resized_image = imagecreatetruecolor($width, $height);
+                imagecopyresampled($resized_image, $original_image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
+
+                $file_name = time() . $image->getClientOriginalName();
+                $path =  public_path() . '/product_images';
+                imagejpeg($resized_image, $path . '/' . $file_name);
+            }
+
+            $product = Product::create($request->only(['title']));
+            $product['image'] = $file_name;
+            $product->details()->create($request->except(['title']));
         }
 
-        // return back()->with('msg', 'Product Added Successfully');
+        return back()->with('msg', 'Product Added Successfully');
     }
 
     /**
