@@ -35,10 +35,10 @@
         <div class="mt-4">
             <x-input-label for="email" :value="__('Brand')" />
             <select class="block mt-1 w-full rounded-md" name="brand" value="{{ old('brand') ?? null }}">
-                <option value=""></option>
-                <option value="yellow">Yellow</option>
-                <option value="sailor">Sailor</option>
-                <option value="easy">Easy</option>
+                <option value="">...</option>
+                @foreach ($brands as $brand)
+                    <option value="{{ $brand->brand }}">{{ $brand->brand }}</option>
+                @endforeach
             </select>
             <x-input-error :messages="$errors->get('brand')" class="mt-2" />
         </div>
@@ -47,10 +47,10 @@
         <div class="mt-4">
             <x-input-label for="email" :value="__('Color')" />
             <select class="block mt-1 w-full rounded-md" name="color" value="{{ old('color') ?? null }}">
-                <option value=""></option>
-                <option value="red">Red</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
+                <option value="">...</option>
+                @foreach ($colors as $color)
+                    <option value="{{ $color->color }}">{{ $color->color }}</option>
+                @endforeach
             </select>
             <x-input-error :messages="$errors->get('color')" class="mt-2" />
         </div>
@@ -59,20 +59,20 @@
         <div class="mt-4">
             <x-input-label for="email" :value="__('Size')" />
             <select class="block mt-1 w-full rounded-md" name="size" value="{{ old('size') ?? null }}">
-                <option value=""></option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
+                <option value="">...</option>
+                @foreach ($sizes as $size)
+                    <option value="{{ $size->size }}">{{ $size->size }}</option>
+                @endforeach
             </select>
             <x-input-error :messages="$errors->get('size')" class="mt-2" />
         </div>
 
         <!-- Image -->
         <div class="mt-4">
+            <div></div>
             <x-input-label for="password" :value="__('Image')" />
 
-            <x-text-input id="password" class="block mt-1 w-full" type="file" name="image" />
+            <x-text-input id="password" class="block mt-1 w-full border border-black" type="file" name="image" />
 
             <x-input-error :messages="$errors->get('image')" class="mt-2" />
         </div>

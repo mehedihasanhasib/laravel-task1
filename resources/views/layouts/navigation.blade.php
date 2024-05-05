@@ -22,6 +22,24 @@
                         {{ __('Add Product') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('color.create')" :active="request()->routeIs('color.create')">
+                        {{ __('Add Color') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('size.create')" :active="request()->routeIs('size.create')">
+                        {{ __('Add Size') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('brand.create')" :active="request()->routeIs('brand.create')">
+                        {{ __('Add Brand') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -89,6 +107,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('product.create')" :active="request()->routeIs('product.create')">
                 {{ __('Add Product') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('color.create')" :active="request()->routeIs('color.create')">
+                {{ __('Add Color') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('size.create')" :active="request()->routeIs('size.create')">
+                {{ __('Add Size') }}
             </x-responsive-nav-link>
         </div>
 

@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="flex justify-center mt-6">
-        <table class="bg-white shadow-md rounded-xl">
+        <table class="bg-white shadow-md rounded-xl w-1/2">
             <thead>
                 <tr class="bg-blue-gray-100 text-gray-700">
                     <th class="py-3 px-4 text-left">Id</th>

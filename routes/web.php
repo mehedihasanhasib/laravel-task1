@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +22,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('/product', ProductController::class);
+    Route::resource('/color', ColorController::class);
+    Route::resource('/size', SizeController::class);
+    Route::resource('/brand', BrandController::class);
+});
 
-Route::resource('/product', ProductController::class)
-    ->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
